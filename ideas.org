@@ -1,0 +1,77 @@
+* i know:
+create boxes, physics, control with hands
+
+I should test out the given project see what is fun.
+
+roll a ball can be adapted for vr
+
+* what do i want?
+
+** use oculus to control plane, leap motion to shoo t
+
+** tower building, leap motion oculus? limited material
+
+** basket ball, random hoops?
+
+** boxing?
+
+** push a box around obstacles? with hands see terrain with oculus, requires level design?
+
+** roll a ball adapted for vr? leap motion control the ball?
+
+** LOOP?
+1.Setup oculus and leap motion, hopefully.
+2.test out given projects
+3.think of a simple idea to do in ~5 hours
+4.see if fun
+5.either continue or goto 2
+
+* SOLVED:
+** graphics driver reinstall
+
+* STUCK:
+** DONE Finally recalibrate leap motion 
+CLOSED: [2016-10-15 Sat 00:38]
+probably going to give up on that
+** TODO oculus rift installation dies (full of deadends) spent ~6 hours
+should try to find somewhere to sleep
+
+try reinstall
+
+ovr server x64.exe has stopped working something
+
+might need service packs for windows 8.1
+
+try reinstall oculus runtime
+
+problem with hdmi plugged in during installation
+
+*** DONE (BAD!) rollback nvidia driver
+CLOSED: [2016-10-15 Sat 02:17]
+got to restart from before
+
+*** DONE Replace SSE4.2 instruction (but my processor supports sse4.2?)
+CLOSED: [2016-10-15 Sat 04:56]
+
+1. Copy OVRServer_x64 from "C:\program files (x86)\oculus\Support\oculus-runtime" to your desktop.
+
+2. Open OVRServer_x64 using a Hex Editor like HxD.
+
+3. Find "f3 0f b8 8e 98 19 00 00" and paste write "b9 01 00 00 00 90 90 90".
+
+4. Save and close file. Overwrite existing OVRServer_x64 file located in "C:\program files (x86)\oculus\Support\oculus-runtime". Ensure service is stopped before attempting to overwrite.
+
+5. Launch OVRServer_x64 and enjoy Oculus Home on DK2!
+
+6. Actually doesn't exist for my version
+
+*** DONE Try version 1.3.2.210591
+CLOSED: [2016-10-15 Sat 04:56]
+against TOS to knowingly use older version
+
+try 1.3?
+try 0.8 beta?
+
+nope
+
+
