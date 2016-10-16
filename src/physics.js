@@ -50,19 +50,23 @@ var impactNormal = new THREE.Vector3();
 var rightResetPinch=false, rightResetGrab=false;
 var rightPinchStrength = .0, rightGrabStrength = .0;
 var rightPalmPosition = [0,0,0];
+var rightPalmVelocity = [0,0,0];
 
 // left hand
 var leftResetPinch=false, leftResetGrab=false;
 var leftPinchStrength = .0, leftGrabStrength = .0;
 var leftPalmPosition = [0,0,0];
 var leftMiddleFinger;
-var reloadTimer = .0, reloadTime = 1.0;
+var leftPalmVelocity = [0,0,0];
+
+var reloadTimer = .0, reloadTime = 0.5;
 
 var sceneSize = 1000;
 
 var oldRightPalmPosition = [0,0,0];
 var oldLeftPalmPosition = [0,0,0];
 
+var createBlockTimer = .0, createBlockTime = 1.5;
 // - Main code -
 
 init();
@@ -574,6 +578,7 @@ function onFrame(frame, deltaTime){
                 leftPalmPosition[i] = hand.palmPosition[i];
             }
 
+            leftPalmVelocity = hand.palmVelocity;
 
             leftMiddleFinger = hand.middleFinger;
 
@@ -588,89 +593,114 @@ function onFrame(frame, deltaTime){
 
                 rightPalmPosition[i] = hand.palmPosition[i];
             }
-            // oldRightPalmPosition = rightPalmPosition;
-            // rightPalmPosition = hand.palmPosition;
-        }
 
-        // move with right pinch
-        // should move with the direction of the rotation
-        if(rightPinchStrength === 1.0 && rightGrabStrength < 0.5){
-            // console.log(oldRightPalmPosition);
-            // console.log(rightPalmPosition);
-            var direction = camera.getWorldDirection();
-            var diff_move = [0.0,0.0,0.0];
-            var temp = new THREE.Vector3();
-            for(var i =0; i < 3; i++){
-                diff_move[i] = clamp(deltaTime*5*(rightPalmPosition[i] - oldRightPalmPosition[i]), -0.2, 0.2);
-            }
-            // direction.x *= diff[0];
-            // direction.y *= diff[1];
-            // direction.z *= diff[2];
-
-            // camera.position.add(leapToScene(diff_move, frame));
-            // camera.position.x += diff_move[0];
-            // camera.position.y += diff_move[1];
-            // camera.position.z += diff_move[2];
-
-            temp.copy(direction);
-            camera.position.add(temp.multiplyScalar(-1*diff_move[2]));
-            temp.copy(direction);
-            temp.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI/2);
-            camera.position.add(temp.multiplyScalar(diff_move[0]));
-            temp.copy(direction);
-            temp.applyAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI/2);
-            camera.position.add(temp.multiplyScalar(diff_move[1]));
-        }
-
-        if(leftPinchStrength === 1.0 && leftGrabStrength < 0.5){
-
-            // change rotation with left pinch
-            var tempRotate = [0.0,0.0,0,0];
-
-            for(var i =0; i < 3; i++){
-                tempRotate[i] = clamp(deltaTime*(leftPalmPosition[i] - oldLeftPalmPosition[i]), -0.1, 0.1);
-            }
-
-            camera.rotation.y -= tempRotate[0];
-        }
-
-        reloadTimer += deltaTime;
-
-        // shoot, middle finger aim
-        if(reloadTimer >= reloadTime && rightGrabStrength === 1.0 && leftMiddleFinger !== undefined){
-
-            // var rayVector = leapToScene(leftMiddleFinger.tipPosition, frame);
-
-            // var rayVector2 =  new THREE.Vector2((rayVector.x/window.innerWidth) * 2-1, - (rayVector.y/ window.innerHeight) * 2 +1);
-
-            var rayVec2 = new THREE.Vector2(leftMiddleFinger.direction[0], leftMiddleFinger.direction[1]+0.5);
-
-            console.log(rayVec2);
-            // raycaster.setFromCamera(new THREE.Vector2(0.3, 0.3), camera );
-
-            raycaster.setFromCamera(rayVec2, camera );
-
-				    // Creates a ball and throws it
-				    var ballMass = 35;
-				    var ballRadius = 0.4;
-
-				    var ball = new THREE.Mesh( new THREE.SphereGeometry( ballRadius, 14, 10 ), ballMaterial );
-				    ball.castShadow = true;
-				    ball.receiveShadow = true;
-				    var ballShape = new Ammo.btSphereShape( ballRadius );
-				    ballShape.setMargin( margin );
-				    pos.copy( raycaster.ray.direction );
-				    pos.add( raycaster.ray.origin );
-				    quat.set( 0, 0, 0, 1 );
-				    var ballBody = createRigidBody( ball, ballShape, ballMass, pos, quat );
-
-				    pos.copy( raycaster.ray.direction );
-				    pos.multiplyScalar( 24 );
-				    ballBody.setLinearVelocity( new Ammo.btVector3( pos.x, pos.y, pos.z ) );
-
-            reloadTimer=0.0;
+            rightPalmVelocity = hand.palmVelocity;
         }
     }
+
+    // move with right pinch
+    // should move with the direction of the rotation
+    if(rightPinchStrength === 1.0 && rightGrabStrength < 0.5){
+
+        var direction = camera.getWorldDirection();
+        var diff_move = [0.0,0.0,0.0];
+        var temp = new THREE.Vector3();
+        for(var i =0; i < 3; i++){
+            diff_move[i] = clamp(deltaTime*5*(rightPalmPosition[i] - oldRightPalmPosition[i]), -0.2, 0.2);
+        }
+        // direction.x *= diff[0];
+        // direction.y *= diff[1];
+        // direction.z *= diff[2];
+
+        // camera.position.add(leapToScene(diff_move, frame));
+        // camera.position.x += diff_move[0];
+        // camera.position.y += diff_move[1];
+        // camera.position.z += diff_move[2];
+
+        temp.copy(direction);
+        camera.position.add(temp.multiplyScalar(-1*diff_move[2]));
+        temp.copy(direction);
+        temp.applyAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI/2);
+        camera.position.add(temp.multiplyScalar(diff_move[0]));
+        temp.copy(direction);
+        temp.applyAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI/2);
+        camera.position.add(temp.multiplyScalar(diff_move[1]));
+    }
+
+    if(leftPinchStrength === 1.0 && leftGrabStrength < 0.5){
+
+        // change rotation with left pinch
+        var tempRotate = [0.0,0.0,0,0];
+
+        for(var i =0; i < 3; i++){
+            tempRotate[i] = clamp(deltaTime*(leftPalmPosition[i] - oldLeftPalmPosition[i]), -0.1, 0.1);
+        }
+
+        camera.rotation.y -= tempRotate[0];
+        camera.rotation.x += tempRotate[1]* 0.3;
+    }
+
+    reloadTimer += deltaTime;
+
+    // shoot, middle finger aim
+    if(reloadTimer >= reloadTime && rightGrabStrength === 1.0 && Math.abs(rightGrabStrength - leftGrabStrength) > 0.9 && leftMiddleFinger !== undefined){
+
+        // var rayVector = leapToScene(leftMiddleFinger.tipPosition, frame);
+
+        // var rayVector2 =  new THREE.Vector2((rayVector.x/window.innerWidth) * 2-1, - (rayVector.y/ window.innerHeight) * 2 +1);
+
+        var rayVec2 = new THREE.Vector2(leftMiddleFinger.direction[0], leftMiddleFinger.direction[1]+0.5);
+
+        // raycaster.setFromCamera(new THREE.Vector2(0.3, 0.3), camera );
+
+        raycaster.setFromCamera(rayVec2, camera );
+
+				// Creates a ball and throws it
+				var ballMass = 35;
+				var ballRadius = 0.4;
+
+				var ball = new THREE.Mesh( new THREE.SphereGeometry( ballRadius, 14, 10 ), ballMaterial );
+				ball.castShadow = true;
+				ball.receiveShadow = true;
+				var ballShape = new Ammo.btSphereShape( ballRadius );
+				ballShape.setMargin( margin );
+				pos.copy( raycaster.ray.direction );
+				pos.add( raycaster.ray.origin );
+				quat.set( 0, 0, 0, 1 );
+				var ballBody = createRigidBody( ball, ballShape, ballMass, pos, quat );
+
+				pos.copy( raycaster.ray.direction );
+				pos.multiplyScalar( 24 );
+				ballBody.setLinearVelocity( new Ammo.btVector3( pos.x, pos.y, pos.z ) );
+
+        reloadTimer=0.0;
+    }
+
+    createBlockTimer += deltaTime;
+    if(createBlockTimer >= createBlockTime && leftGrabStrength === 1.0 && rightGrabStrength === 1.0){
+		    pos.copy(camera.position);
+        pos.add(camera.getWorldDirection().multiplyScalar(4));
+        pos.y = 0;
+
+		    quat.set( 0, 0, 0, 1 );
+
+        var size = [0,0,0];
+        for(var i = 0; i < 3; i++){
+            size[i] = 10*Math.abs(leftPalmPosition[i] - rightPalmPosition[i])/window.innerWidth;
+        }
+        var halfExtents = new THREE.Vector3(size[0], size[1], size[2]);
+		    createObject( 100, halfExtents, pos, quat, createMaterial() );
+        createBlockTimer = 0.0;
+    }
+
+    if(Math.abs(leftPalmVelocity[1]) > 900.0 && Math.abs(rightPalmVelocity[1]) > 900.0){
+        // init();
+        // rigidBodies = [];
+        // objectsToRemove = [];
+        // numObjectsToRemove = 0;
+        window.location.reload(true);
+    }
+    // console.log(leftPalmVelocity + "    " + rightPalmVelocity);
 }
 
 Leap.loop({background: true}, function(frame){
