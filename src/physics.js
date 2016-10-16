@@ -639,10 +639,16 @@ function onFrame(frame, deltaTime){
         // shoot, middle finger aim
         if(reloadTimer >= reloadTime && rightGrabStrength === 1.0 && leftMiddleFinger !== undefined){
 
-            var rayVector = leapToScene(leftMiddleFinger.tipPosition, frame);
+            // var rayVector = leapToScene(leftMiddleFinger.tipPosition, frame);
 
-            console.log(rayVector);
-            raycaster.setFromCamera(new THREE.Vector2(0.3, 0.3), camera );
+            // var rayVector2 =  new THREE.Vector2((rayVector.x/window.innerWidth) * 2-1, - (rayVector.y/ window.innerHeight) * 2 +1);
+
+            var rayVec2 = new THREE.Vector2(leftMiddleFinger.direction[0], leftMiddleFinger.direction[1]+0.5);
+
+            console.log(rayVec2);
+            // raycaster.setFromCamera(new THREE.Vector2(0.3, 0.3), camera );
+
+            raycaster.setFromCamera(rayVec2, camera );
 
 				    // Creates a ball and throws it
 				    var ballMass = 35;
