@@ -1,12 +1,30 @@
 * i know:
+[2016-10-14 Fri]
 create boxes, physics, control with hands
 
 I should test out the given project see what is fun.
 
 roll a ball can be adapted for vr
 
+[2016-10-15 Sat]
+no oculus
+
+shaders
+
+movement 
+
+fingers
+
+sound? instrument
+
+pretty fun to play around with
+
+i still kind of want shaders but it might be tricky
+
+i definiely want to try this trails thing
 * what do i want?
 
+[2016-10-14 Fri]
 ** use oculus to control plane, leap motion to shoo t
 
 ** tower building, leap motion oculus? limited material
@@ -26,6 +44,20 @@ roll a ball can be adapted for vr
 4.see if fun
 5.either continue or goto 2
 
+** [2016-10-15 Sat] 
+
+test v2 playground unity, hopefully it works
+
+javascript seems easier to use right now
+
+modify examples see why they work
+
+create a solid from vertices of hands?
+
+boids using hands, somehow have to control them
+
+voxel painter?
+
 * SOLVED:
 ** graphics driver reinstall
 
@@ -33,7 +65,9 @@ roll a ball can be adapted for vr
 ** DONE Finally recalibrate leap motion 
 CLOSED: [2016-10-15 Sat 00:38]
 probably going to give up on that
-** TODO oculus rift installation dies (full of deadends) spent ~6 hours
+** DONE oculus rift installation dies (full of deadends) spent ~6 hours
+CLOSED: [2016-10-15 Sat 11:44]
+cant get it to work
 should try to find somewhere to sleep
 
 try reinstall
@@ -73,5 +107,17 @@ try 1.3?
 try 0.8 beta?
 
 nope
+** DONE Orion? or javascript? JAVASCRIPT
+CLOSED: [2016-10-15 Sat 13:28]
+
+orion working but no examples really. test out modules? maybe that has
+scenes
+
+v2 doesn't seem to be working on the new version of unity. v2 has all
+the examples though. try to copy some of the code?
+
+javascript maybe? might be simpler
+
+try to make a small change to anything?
 
 
