@@ -43,7 +43,6 @@ i definiely want to try this trails thing
 3.think of a simple idea to do in ~5 hours
 4.see if fun
 5.either continue or goto 2
-
 ** [2016-10-15 Sat] 
 
 test v2 playground unity, hopefully it works
@@ -57,6 +56,20 @@ create a solid from vertices of hands?
 boids using hands, somehow have to control them
 
 voxel painter?
+
+** [2016-10-16 Sun] 
+
+navigation through leap motion
+
+all controls? what to map out?
+
+displace, pinch right hand, drag
+rotate, pinch left hand, drag
+shoot, left middle finger direction aim, right hand grab to shoot
+create block, both hands grab?
+reset, fast hand wave
+
+navigation first ~ kind of ok
 
 * SOLVED:
 ** graphics driver reinstall
@@ -119,5 +132,10 @@ the examples though. try to copy some of the code?
 javascript maybe? might be simpler
 
 try to make a small change to anything?
+** DONE why would anyone want this?
+CLOSED: [2016-10-16 Sun 03:55]
+
+build, destroy, design
+
 
 
